@@ -1,0 +1,60 @@
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#BDBABA"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/img1"
+        android:layout_width="427dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:background="#CACAC8"
+        app:srcCompat=" @drawable/picture" />
+    <ImageView
+        android:id="@+id/img2"
+        android:layout_width="396dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:visibility="gone"
+        app:srcCompat=" @drawable/adhi" />
+
+
+</FrameLayout>
+
+MainActivity.java
+package com.example.toogle1;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    ImageView i1,i2;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+// Find the ImageView elements by their IDs
+        i1= findViewById(R.id.img1);
+        i2= findViewById(R.id.img2);
+// Set click listeners for the ImageViews
+        i1.setOnClickListener(this);
+        i2.setOnClickListener(this);
+    }
+    public void onClick(View view){
+        if(view.getId()==R.id.img1){
+            i1.setVisibility(view.GONE);
+            i2.setVisibility(view.VISIBLE);
+        }
+        else{
+            i2.setVisibility(view.GONE);
+            i1.setVisibility(view.VISIBLE);
+        }
+    }
+}
