@@ -1,0 +1,109 @@
+MainAcitivity.java
+package com.example.registration1;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText usrname, email, passwd;
+    private Button regbtn;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        usrname = findViewById(R.id.usernameText);
+        email = findViewById(R.id.emailText);
+        passwd = findViewById(R.id.passwordText);
+        regbtn = findViewById(R.id.registerButton);
+
+        regbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Get values from EditText
+                String uname = usrname.getText().toString();
+                String em = email.getText().toString();
+                String pwd = passwd.getText().toString();
+
+                // Create SharedPreferences
+                SharedPreferences preferences =
+                        getSharedPreferences("MyPref", MODE_PRIVATE);
+
+                // Save values using putString()
+                SharedPreferences.Editor editor = preferences.edit();
+
+                editor.putString("username", uname);
+                editor.putString("email", em);
+                editor.putString("password", pwd);
+
+                editor.apply();
+
+                // Retrieve values using getString()
+                String savedUsername =
+                        preferences.getString("username", "");
+
+                String savedEmail =
+                        preferences.getString("email", "");
+
+                String savedPassword =
+                        preferences.getString("password", "");
+
+                // Display retrieved username
+                Toast.makeText(
+                        MainActivity.this,
+                        "Registration successful\nUsername: " + savedUsername,
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
+    }
+}
+
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/usernameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Username" />
+    <EditText
+        android:id="@+id/emailText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Email" />
+    <EditText
+        android:id="@+id/passwordText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Password" />
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Register" />
+</LinearLayout>
